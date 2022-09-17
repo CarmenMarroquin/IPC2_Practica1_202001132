@@ -1,3 +1,4 @@
+from re import I
 import lista
 from nodoLista import NodoLista
 import orden
@@ -57,6 +58,7 @@ def realizarOrden(cola):
         
 def verOrden(cadena):
     #listaTiempo= lista.listaDoble()
+    
     tiempoGlobal = 0
     grafi = 'digraph orden{\n'\
         'rankdir = "LR"\n'\
@@ -97,41 +99,46 @@ def verOrden(cadena):
     archivo.close()
     subprocess.run(['dot', '-Tsvg', 'La_Orden.dot', '-o', 'La_Orden.svg'])
     os.startfile('La_Orden.svg')    
-         
+    menu(cadena)   
   
             
         
-def entregar(cola):
-    print("Ingrese 1 para entregar orden \n")
-    print("Ingrese 2 para regresar al menu")
-    en=True
+def entregar(cadena):
+    
     tiempoGlobal = 0
-    while en==True:
-        ente=input("Seleccione una opcion:\n")
-        if int(ente) == 1:
-            entrega1= cola.desencolar().dato
-            nombre=entrega1.datos
-            cant= entrega1.cantidad
-            tiempo2=entrega1.tiempo
-            tiempoGlobal += tiempo2
+    grafi = 'digraph orden{\n'\
+        'rankdir = "LR"\n'\
+        'node[shape="folder" style="filled" fillcolor="white"]\n'
+    entrega= cadena.desencolar().dato
+    nombre = entrega.datos
+    canti= entrega.cantidad
+    tiempo = entrega.tiempo
+    
+    tiempoGlobal += tiempo
+    ingre = entrega.shuko
+    for i in range(ingre.tamanio):
+        ingrediente1=ingre.buscar_nodo(i)
+        ingredi=ingrediente1.dato
+        print(ingredi)
+        print("-------------------------")
+    texto = grafico(nombre,canti,tiempoGlobal,ingredi,i)
+    grafi = grafi + texto    
+    
+    conexiones = ''
+    for i in range(cadena.tamaño - 1):
+        conexiones += 's' + str(i) +'->' + 's' + str(i+1)
+    conexiones += '\n'
+    
+    grafi += conexiones + '\n}'  
+    
+    archivo = open('La_Orden.dot', 'w', encoding='utf-8')
+    archivo.write(grafi)
+    archivo.close()
+    subprocess.run(['dot', '-Tsvg', 'La_Orden.dot', '-o', 'La_Orden.svg'])
+    os.startfile('La_Orden.svg')    
+    menu(cadena) 
 
-            print("\nNombre: "+nombre)
-            print("\nCantidad: "+str(cant))
-            print("\ntiempo multi: "+str(tiempoGlobal))
-            print("\nIngredientes: ")
-            ingre = entrega1.shuko
-            for j in range(ingre.tamanio):
-                ingrediente1=ingre.buscar_nodo(j)
-                ingredi=ingrediente1.dato
-                print(ingredi)
-                print("-------------------------")      
-        elif int(ente) == 2:
-            en= False
-            menu(cola)
-        else: 
-            print("OPCION NO VALIDA")      
-            
-            
+           
 def grafico(nombre,cantidad,tiempo,ingredientes,indice):
     
     nombre1 = nombre
@@ -149,7 +156,7 @@ def menu(cadenaPrincipal):
     print("\ningrese 1 si de desea ingresar una orden")
     print("ingrese 2 si desea ver los pedidos")
     print("ingrese 3 para entregar orden ")
-    print("ingrese 4 para entregar orden ")
+    print("ingrese 4 para datos  ")
     print("ingrese 5 si desea salir del menu\n")
     eleccion= input("Selecciona una opcion: ")
     if int(eleccion) == 1:

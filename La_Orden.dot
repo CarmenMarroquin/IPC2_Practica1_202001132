@@ -1,7 +1,7 @@
 digraph orden{
 rankdir = "LR"
 node[shape="folder" style="filled" fillcolor="white"]
-s0 [label="Nombre:luca | Cantidad de shucos: 5| Tiempo: 10| Salchicha"]
+s0 [label="Nombre:dad | Cantidad de shucos: 5| Tiempo: 10| Salchicha"]
 
 
 }
