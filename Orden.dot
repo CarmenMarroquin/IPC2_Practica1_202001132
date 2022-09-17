@@ -1,0 +1,7 @@
+digraph orden{
+rankdir = "TB"
+node[shape=record style="filled" fillcolor=""]
+s0 [label="Nombre: l | Cantidad de shucos: 5 | Tiempo: 10|Salchicha"]
+s1 [label="Nombre: l | Cantidad de shucos: 5 | Tiempo: 10|Salchicha"]
+s0 -> s1
+}
